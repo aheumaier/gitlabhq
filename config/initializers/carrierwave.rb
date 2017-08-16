@@ -1,6 +1,7 @@
 CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
 
 aws_file = Rails.root.join('config', 'aws.yml')
+azure_file = Rails.root.join('config', 'azure.yml')
 
 if File.exist?(aws_file)
   AWS_CONFIG = YAML.load(File.read(aws_file))[Rails.env]
@@ -40,4 +41,17 @@ if File.exist?(aws_file)
     )
     connection.directories.create(key: AWS_CONFIG['bucket'])
   end
+end
+
+if File.exist? azure_file
+  AZURE_CONFIG = YAML.load(File.read(azure_file))[Rails.env]
+  CarrierWave.configure do |config|
+    config.azure_credentials = {
+        storage_account_name: AZURE_CONFIG['storage_account_name'],
+        storage_access_key:   AZURE_CONFIG['storage_access_key']
+    }
+    config.azure_container = 'YOUR CONTAINER NAME'
+    config.azure_host = 'YOUR CDN HOST' # optional
+  end
+
 end

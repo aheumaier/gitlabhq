@@ -110,6 +110,9 @@ gem 'google-api-client', '~> 0.8.6'
 # for aws storage
 gem 'unf', '~> 0.1.4'
 
+# for azure storage
+gem 'carrierwave-azure-storage'
+
 # Seed data
 gem 'seed-fu', '~> 2.3.5'
 
